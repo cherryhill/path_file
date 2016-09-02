@@ -146,6 +146,8 @@ class PathFileEntity extends ContentEntityBase implements PathFileEntityInterfac
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    $config = \Drupal::config('path_file.settings');
+
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
@@ -179,10 +181,11 @@ class PathFileEntity extends ContentEntityBase implements PathFileEntityInterfac
 
 
 
+    $extensions_from_config = $config->get('allowed_extensions');
     $fields['fid'] = BaseFieldDefinition::create('file')
       ->setLabel(t('File Name'))
       ->setDescription(t('The File of the associated event.'))
-      ->setSetting('file_extensions', 'pdf doc docx xls xlsx ppt pptx png jpg jpeg')
+      ->setSetting('file_extensions', $extensions_from_config)
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'file',

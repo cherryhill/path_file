@@ -45,27 +45,15 @@ class PathFileEntitySettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
-    $allowed_settings = $form_state->getValue('allowed_extensions');
+    $allowed_extensions = $form_state->getValue('allowed_extensions');
 
-    // Update definitions and schema.
+    $config = $this->config('path_file.settings');
+    $config->set('allowed_extensions', $allowed_extensions)->save();
+
+    //@TODO - is there a cleaner way to rebuild the field definition
     $manager = \Drupal::entityDefinitionUpdateManager();
-    $field = BaseFieldDefinition::create('file')
-      ->setLabel(t('File Name'))
-      ->setDescription($allowed_settings)
-      ->setSetting('file_extensions', $allowed_settings)
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'file',
-        'weight' => -3,
-      ))
-      ->setDisplayOptions('form', array(
-        'weight' => -3,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $manager->installFieldStorageDefinition('fid', 'path_file_entity', 'path_file_entity', $field);
-
+    $field = $manager->getFieldStorageDefinition("fid", "path_file_entity");
+    $manager->updateFieldStorageDefinition($field);
 
     parent::submitForm($form, $form_state);
   }
@@ -84,10 +72,8 @@ class PathFileEntitySettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['PathFileEntity_settings']['#markup'] = 'Settings form for Path file entity entities. Manage field settings here.';
 
-    $manager = \Drupal::entityDefinitionUpdateManager();
-    $field = $manager->getFieldStorageDefinition("fid", "path_file_entity");
-
-    $allowed_extensions = $field->getSetting('file_extensions');
+    $config = $this->config('path_file.settings');
+    $allowed_extensions = $config->get('allowed_extensions');
 
     $form['allowed_extensions'] = array(
       '#type' => 'textfield',
