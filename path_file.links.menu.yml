@@ -8,10 +8,10 @@ entity.path_file:
   parent: system.admin_content
 
 
-#path_file_entity.settings:
-#  title: Path file entity settings
-#  description: 'Path File Settings'
-#  route_name: path_file_entity.settings
-#  parent: entity.path_file
+path_file_entity.settings:
+  title: Path file entity settings
+  description: 'Path File Settings'
+  route_name: path_file_entity.settings
+  parent: entity.path_file
 
 
