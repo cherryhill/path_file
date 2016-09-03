@@ -33,6 +33,8 @@ class PathFileEntityListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\path_file\Entity\PathFileEntity */
     $row['id'] = $entity->id();
+
+    //display name as a link to the edit form
     $row['name'] = $this->l(
       $entity->label(),
       new Url(
@@ -42,6 +44,7 @@ class PathFileEntityListBuilder extends EntityListBuilder {
       )
     );
 
+    //Display path, links to the file itself
     $url = $entity->url();
     $row['path'] = $this->l($url, new Url(
       'entity.path_file_entity.canonical', array(

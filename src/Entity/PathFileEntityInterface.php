@@ -13,8 +13,6 @@ use Drupal\user\EntityOwnerInterface;
  */
 interface PathFileEntityInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
-  // Add get/set methods for your configuration properties here.
-
   /**
    * Gets the Path file entity name.
    *
@@ -73,5 +71,13 @@ interface PathFileEntityInterface extends ContentEntityInterface, EntityChangedI
    *   The called Path file entity entity.
    */
   public function setPublished($published);
+
+  /**
+   * Gets the File ID.
+   *
+   * @return int
+   *   The target_id of the file associated with this entity.
+   */
+  public function getFid();
 
 }

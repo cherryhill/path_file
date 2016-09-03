@@ -143,12 +143,19 @@ class PathFileEntity extends ContentEntityBase implements PathFileEntityInterfac
   /**
    * {@inheritdoc}
    */
+  public function getFid(){
+    return $this->get('fid')->target_id;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $config = \Drupal::config('path_file.settings');
 
-
+    //Allows user's to name this Path File
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
       ->setDescription(t('A name for this Path File.'))
@@ -169,6 +176,7 @@ class PathFileEntity extends ContentEntityBase implements PathFileEntityInterfac
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    //URL alias for the file
     $fields['path'] = BaseFieldDefinition::create('path')
       ->setLabel(t('URL alias'))
       ->setTranslatable(TRUE)
@@ -180,8 +188,9 @@ class PathFileEntity extends ContentEntityBase implements PathFileEntityInterfac
       ->setCustomStorage(TRUE);
 
 
-
+    //Allow user to specify the allowed files
     $extensions_from_config = $config->get('allowed_extensions');
+    //File Upload field
     $fields['fid'] = BaseFieldDefinition::create('file')
       ->setLabel(t('File Name'))
       ->setDescription(t('The File of the associated event.'))
@@ -198,6 +207,7 @@ class PathFileEntity extends ContentEntityBase implements PathFileEntityInterfac
       ->setDisplayConfigurable('view', TRUE);
 
 
+    //Can be published or unpublished, defaults to true
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
       ->setDescription(t('A boolean indicating whether the Path file entity is published.'))

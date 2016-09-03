@@ -3,25 +3,40 @@
 namespace Drupal\path_file\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\path_file\Entity\PathFileEntityInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Drupal\file\Entity\File;
+use Drupal\Core\File\FileSystem;
 
 /**
 * An example controller.
 */
 class PathFileController extends ControllerBase {
 
-/**
-* {@inheritdoc}
-*/
-public function file(PathFileEntityInterface $path_file_entity) {
+  protected $file_system;
 
-  $fid = $path_file_entity->fid->getValue()[0]['target_id'];
-  $file = \Drupal\file\Entity\File::load($fid);
-  $uri = $file->getFileUri();
-  $server_path = \Drupal::service('file_system')->realpath($uri);
+  public function __construct(FileSystem $file_system) {
+    $this->file_system = $file_system;
+  }
 
-  return new BinaryFileResponse($server_path);
-}
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('file_system')
+    );
+  }
+
+  /**
+  * {@inheritdoc}
+  */
+  public function file(PathFileEntityInterface $path_file_entity) {
+
+    $fid = $path_file_entity->getFid();
+    $file = File::load($fid);
+    $uri = $file->getFileUri();
+    $server_path = $this->file_system->realpath($uri);
+
+    return new BinaryFileResponse($server_path);
+  }
 
 }

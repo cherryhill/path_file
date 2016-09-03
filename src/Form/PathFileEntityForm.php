@@ -19,8 +19,6 @@ class PathFileEntityForm extends ContentEntityForm {
     /* @var $entity \Drupal\path_file\Entity\PathFileEntity */
     $form = parent::buildForm($form, $form_state);
 
-    $entity = $this->entity;
-
     return $form;
   }
 

@@ -3,6 +3,7 @@ path_file_entity.settings_tab:
   route_name: path_file_entity.settings
   title: 'Settings'
   base_route: path_file_entity.settings
+
 entity.path_file_entity.canonical:
   route_name: entity.path_file_entity.canonical
   base_route: entity.path_file_entity.canonical
