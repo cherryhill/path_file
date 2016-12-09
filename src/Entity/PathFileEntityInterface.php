@@ -11,17 +11,18 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup path_file
  */
-interface PathFileEntityInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
+interface PathFileEntityInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface
+{
 
-  /**
+    /**
    * Gets the Path file entity name.
    *
    * @return string
    *   Name of the Path file entity.
    */
-  public function getName();
+    public function getName();
 
-  /**
+    /**
    * Sets the Path file entity name.
    *
    * @param string $name
@@ -30,17 +31,17 @@ interface PathFileEntityInterface extends ContentEntityInterface, EntityChangedI
    * @return \Drupal\path_file\Entity\PathFileEntityInterface
    *   The called Path file entity entity.
    */
-  public function setName($name);
+    public function setName($name);
 
-  /**
+    /**
    * Gets the Path file entity creation timestamp.
    *
    * @return int
    *   Creation timestamp of the Path file entity.
    */
-  public function getCreatedTime();
+    public function getCreatedTime();
 
-  /**
+    /**
    * Sets the Path file entity creation timestamp.
    *
    * @param int $timestamp
@@ -49,9 +50,9 @@ interface PathFileEntityInterface extends ContentEntityInterface, EntityChangedI
    * @return \Drupal\path_file\Entity\PathFileEntityInterface
    *   The called Path file entity entity.
    */
-  public function setCreatedTime($timestamp);
+    public function setCreatedTime($timestamp);
 
-  /**
+    /**
    * Returns the Path file entity published status indicator.
    *
    * Unpublished Path file entity are only visible to restricted users.
@@ -59,25 +60,26 @@ interface PathFileEntityInterface extends ContentEntityInterface, EntityChangedI
    * @return bool
    *   TRUE if the Path file entity is published.
    */
-  public function isPublished();
+    public function isPublished();
 
-  /**
+    /**
    * Sets the published status of a Path file entity.
    *
    * @param bool $published
-   *   TRUE to set this Path file entity to published, FALSE to set it to unpublished.
+   *   TRUE to set this Path file entity to published,
+   *   FALSE to set it to unpublished.
    *
    * @return \Drupal\path_file\Entity\PathFileEntityInterface
    *   The called Path file entity entity.
    */
-  public function setPublished($published);
+    public function setPublished($published);
 
-  /**
+    /**
    * Gets the File ID.
    *
    * @return int
    *   The target_id of the file associated with this entity.
    */
-  public function getFid();
+    public function getFid();
 
 }

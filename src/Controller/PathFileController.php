@@ -12,31 +12,35 @@ use Drupal\Core\File\FileSystem;
 /**
 * An example controller.
 */
-class PathFileController extends ControllerBase {
+class PathFileController extends ControllerBase
+{
 
-  protected $file_system;
+    protected $file_system;
 
-  public function __construct(FileSystem $file_system) {
-    $this->file_system = $file_system;
-  }
+    public function __construct(FileSystem $file_system) 
+    {
+        $this->file_system = $file_system;
+    }
 
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('file_system')
-    );
-  }
+    public static function create(ContainerInterface $container) 
+    {
+        return new static(
+        $container->get('file_system')
+        );
+    }
 
-  /**
+    /**
   * {@inheritdoc}
   */
-  public function file(PathFileEntityInterface $path_file_entity) {
+    public function file(PathFileEntityInterface $path_file_entity) 
+    {
 
-    $fid = $path_file_entity->getFid();
-    $file = File::load($fid);
-    $uri = $file->getFileUri();
-    $server_path = $this->file_system->realpath($uri);
+        $fid = $path_file_entity->getFid();
+        $file = File::load($fid);
+        $uri = $file->getFileUri();
+        $server_path = $this->file_system->realpath($uri);
 
-    return new BinaryFileResponse($server_path);
-  }
+        return new BinaryFileResponse($server_path);
+    }
 
 }

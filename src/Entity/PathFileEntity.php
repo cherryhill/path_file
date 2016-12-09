@@ -51,177 +51,203 @@ use Drupal\user\UserInterface;
  *   }
  * )
  */
-class PathFileEntity extends ContentEntityBase implements PathFileEntityInterface {
+class PathFileEntity extends ContentEntityBase implements PathFileEntityInterface
+{
 
-  use EntityChangedTrait;
+    use EntityChangedTrait;
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
-    parent::preCreate($storage_controller, $values);
-    $values += array(
-      'user_id' => \Drupal::currentUser()->id(),
-    );
-  }
+    public static function preCreate(EntityStorageInterface $storage_controller, array &$values) 
+    {
+        parent::preCreate($storage_controller, $values);
+        $values += array(
+        'user_id' => \Drupal::currentUser()->id(),
+        );
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function getName() {
-    return $this->get('name')->value;
-  }
+    public function getName() 
+    {
+        return $this->get('name')->value;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function setName($name) {
-    $this->set('name', $name);
-    return $this;
-  }
+    public function setName($name) 
+    {
+        $this->set('name', $name);
+        return $this;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function getCreatedTime() {
-    return $this->get('created')->value;
-  }
+    public function getCreatedTime() 
+    {
+        return $this->get('created')->value;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function setCreatedTime($timestamp) {
-    $this->set('created', $timestamp);
-    return $this;
-  }
+    public function setCreatedTime($timestamp) 
+    {
+        $this->set('created', $timestamp);
+        return $this;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function getOwner() {
-    return $this->get('user_id')->entity;
-  }
+    public function getOwner() 
+    {
+        return $this->get('user_id')->entity;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function getOwnerId() {
-    return $this->get('user_id')->target_id;
-  }
+    public function getOwnerId() 
+    {
+        return $this->get('user_id')->target_id;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
-    return $this;
-  }
+    public function setOwnerId($uid) 
+    {
+        $this->set('user_id', $uid);
+        return $this;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function setOwner(UserInterface $account) {
-    $this->set('user_id', $account->id());
-    return $this;
-  }
+    public function setOwner(UserInterface $account) 
+    {
+        $this->set('user_id', $account->id());
+        return $this;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function isPublished() {
-    return (bool) $this->getEntityKey('status');
-  }
+    public function isPublished() 
+    {
+        return (bool) $this->getEntityKey('status');
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function setPublished($published) {
-    $this->set('status', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
-    return $this;
-  }
+    public function setPublished($published) 
+    {
+        $this->set('status', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
+        return $this;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public function getFid(){
-    return $this->get('fid')->target_id;
-  }
+    public function getFid() 
+    {
+        return $this->get('fid')->target_id;
+    }
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
-    $fields = parent::baseFieldDefinitions($entity_type);
+    public static function baseFieldDefinitions(EntityTypeInterface $entity_type) 
+    {
+        $fields = parent::baseFieldDefinitions($entity_type);
 
-    $config = \Drupal::config('path_file.settings');
+        $config = \Drupal::config('path_file.settings');
 
-    //Allows user's to name this Path File
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('A name for this Path File.'))
-      ->setSettings(array(
-        'max_length' => 50,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -4,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -4,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+        // Allows user's to name this Path File.
+        $fields['name'] = BaseFieldDefinition::create('string')
+        ->setLabel(t('Name'))
+        ->setDescription(t('A name for this Path File.'))
+        ->setSettings(
+            array(
+            'max_length' => 50,
+            'text_processing' => 0,
+            )
+        )
+        ->setDefaultValue('')
+        ->setDisplayOptions(
+            'view', array(
+            'label' => 'above',
+            'type' => 'string',
+            'weight' => -4,
+            )
+        )
+        ->setDisplayOptions(
+            'form', array(
+            'type' => 'string_textfield',
+            'weight' => -4,
+            )
+        )
+        ->setDisplayConfigurable('form', true)
+        ->setDisplayConfigurable('view', true);
 
-    //URL alias for the file
-    $fields['path'] = BaseFieldDefinition::create('path')
-      ->setLabel(t('URL alias'))
-      ->setTranslatable(TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'path',
-        'weight' => 30,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setCustomStorage(TRUE);
-
-
-    //Allow user to specify the allowed files
-    $extensions_from_config = $config->get('allowed_extensions');
-    //File Upload field
-    $fields['fid'] = BaseFieldDefinition::create('file')
-      ->setLabel(t('File Name'))
-      ->setDescription(t('The File of the associated event.'))
-      ->setSetting('file_extensions', $extensions_from_config)
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'file',
-        'weight' => -3,
-      ))
-      ->setDisplayOptions('form', array(
-        'weight' => -3,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+        // URL alias for the file.
+        $fields['path'] = BaseFieldDefinition::create('path')
+        ->setLabel(t('URL alias'))
+        ->setTranslatable(true)
+        ->setDisplayOptions(
+            'form', array(
+            'type' => 'path',
+            'weight' => 30,
+            )
+        )
+        ->setDisplayConfigurable('form', true)
+        ->setCustomStorage(true);
 
 
-    //Can be published or unpublished, defaults to true
-    $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the Path file entity is published.'))
-      ->setDefaultValue(TRUE);
+        // Allow user to specify the allowed files.
+        $extensions_from_config = $config->get('allowed_extensions');
+        // File Upload field.
+        $fields['fid'] = BaseFieldDefinition::create('file')
+        ->setLabel(t('File Name'))
+        ->setDescription(t('The File of the associated event.'))
+        ->setSetting('file_extensions', $extensions_from_config)
+        ->setDisplayOptions(
+            'view', array(
+            'label' => 'above',
+            'type' => 'file',
+            'weight' => -3,
+            )
+        )
+        ->setDisplayOptions(
+            'form', array(
+            'weight' => -3,
+            )
+        )
+        ->setDisplayConfigurable('form', true)
+        ->setDisplayConfigurable('view', true);
 
-    $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
-      ->setDescription(t('The time that the entity was created.'));
 
-    $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the entity was last edited.'));
+        // Can be published or unpublished, defaults to true.
+        $fields['status'] = BaseFieldDefinition::create('boolean')
+        ->setLabel(t('Publishing status'))
+        ->setDescription(t('A boolean indicating whether the Path file entity is published.'))
+        ->setDefaultValue(true);
 
-    return $fields;
-  }
+        $fields['created'] = BaseFieldDefinition::create('created')
+        ->setLabel(t('Created'))
+        ->setDescription(t('The time that the entity was created.'));
+
+        $fields['changed'] = BaseFieldDefinition::create('changed')
+        ->setLabel(t('Changed'))
+        ->setDescription(t('The time that the entity was last edited.'));
+
+        return $fields;
+    }
 
 }

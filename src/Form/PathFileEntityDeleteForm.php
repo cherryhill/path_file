@@ -9,7 +9,8 @@ use Drupal\Core\Entity\ContentEntityDeleteForm;
  *
  * @ingroup path_file
  */
-class PathFileEntityDeleteForm extends ContentEntityDeleteForm {
+class PathFileEntityDeleteForm extends ContentEntityDeleteForm
+{
 
 
 }
