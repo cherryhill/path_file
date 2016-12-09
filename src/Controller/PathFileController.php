@@ -40,7 +40,7 @@ class PathFileController extends ControllerBase {
     $fid = $path_file_entity->getFid();
     $file = File::load($fid);
     $uri = $file->getFileUri();
-    $server_path = $this->file_system->realpath($uri);
+    $server_path = $this->fileSystem->realpath($uri);
 
     return new BinaryFileResponse($server_path);
   }
