@@ -60,11 +60,6 @@ class PathFileEntityForm extends ContentEntityForm {
     //   need a way to plug themselves into 1) the ::submit() step, and
     //   2) the ::save() step, both decoupled from the pressed form button.
     if (\Drupal::currentUser()->hasPermission('Administer Path file entity entities')) {
-      // isNew | prev status » default   & publish label             & unpublish label
-      // 1     | 1           » publish   & Save and publish          & Save as unpublished
-      // 1     | 0           » unpublish & Save and publish          & Save as unpublished
-      // 0     | 1           » publish   & Save and keep published   & Save and unpublish
-      // 0     | 0           » unpublish & Save and keep unpublished & Save and publish.
       // Add a "Publish" button.
       $element['publish'] = $element['submit'];
       // If the "Publish" button is clicked, we want to update the status to "published".

@@ -18,6 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class PathFileEntitySettingsForm extends ConfigFormBase {
 
   /**
+   *  Entity Definition Update Manager
+   *
    * @var \Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface
    */
   protected $entityDefinitionUpdateManager;
@@ -27,7 +29,6 @@ class PathFileEntitySettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
-   *
    * @param \Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface $entityDefinitionUpdateManager
    *   Entity definition update manager.
    */

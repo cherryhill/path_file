@@ -14,17 +14,17 @@ use Drupal\Core\File\FileSystem;
  */
 class PathFileController extends ControllerBase {
 
-  protected $file_system;
+  protected $fileSystem;
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function __construct(FileSystem $file_system) {
-    $this->file_system = $file_system;
+    $this->fileSystem = $file_system;
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(

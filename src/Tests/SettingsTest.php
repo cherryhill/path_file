@@ -19,7 +19,7 @@ class SettingsTest extends WebTestBase {
   public static $modules = array('file', 'path_file');
 
   /**
-   *
+   * Test Settings
    */
   public function testSettings() {
     // Any method whose name starts with "test" is a test that will be executed.

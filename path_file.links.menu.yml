@@ -13,5 +13,3 @@ path_file_entity.settings:
   description: 'Path File Settings'
   route_name: path_file_entity.settings
   parent: entity.path_file
-
-
