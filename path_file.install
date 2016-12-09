@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Contains path file install code.
@@ -11,18 +12,18 @@ use Drupal\user\RoleInterface;
  */
 function path_file_install() {
   /*
-    Enable default permissions for system roles.
-    IMPORTANT: Modules SHOULD NOT automatically grant any user role access
-    permissions in hook_install().
-    However, like nodes, the 'View published Path file entity entities'
-    permission is a very special case, since
-    this permissions should be extended to anonymous and
-    authenticated users for almost all use cases.
-  */
+  Enable default permissions for system roles.
+  IMPORTANT: Modules SHOULD NOT automatically grant any user role access
+  permissions in hook_install().
+  However, like nodes, the 'View published Path file entity entities'
+  permission is a very special case, since
+  this permissions should be extended to anonymous and
+  authenticated users for almost all use cases.
+   */
   user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, array(
-    'View published Path file entity entities'
+    'View published Path file entity entities',
   ));
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, array(
-    'View published Path file entity entities'
+    'View published Path file entity entities',
   ));
 }
