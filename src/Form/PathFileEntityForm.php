@@ -62,7 +62,8 @@ class PathFileEntityForm extends ContentEntityForm {
     if (\Drupal::currentUser()->hasPermission('Administer Path file entity entities')) {
       // Add a "Publish" button.
       $element['publish'] = $element['submit'];
-      // If the "Publish" button is clicked, we want to update the status to "published".
+      // If the "Publish" button is clicked,
+      // we want to update the status to "published".
       $element['publish']['#published_status'] = TRUE;
       $element['publish']['#dropbutton'] = 'save';
       if ($path_file->isNew()) {
@@ -75,7 +76,8 @@ class PathFileEntityForm extends ContentEntityForm {
 
       // Add a "Unpublish" button.
       $element['unpublish'] = $element['submit'];
-      // If the "Unpublish" button is clicked, we want to update the status to "unpublished".
+      // If the "Unpublish" button is clicked,
+      // we want to update the status to "unpublished".
       $element['unpublish']['#published_status'] = FALSE;
       $element['unpublish']['#dropbutton'] = 'save';
       if ($path_file->isNew()) {

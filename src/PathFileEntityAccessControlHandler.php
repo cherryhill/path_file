@@ -18,9 +18,7 @@ class PathFileEntityAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    /**
-    * @var \Drupal\path_file\Entity\PathFileEntityInterface $entity
-    */
+    // @var \Drupal\path_file\Entity\PathFileEntityInterface $entity
     switch ($operation) {
       case 'view':
         if (!$entity->isPublished()) {
