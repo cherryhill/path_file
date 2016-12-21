@@ -26,7 +26,7 @@ use Drupal\user\UserInterface;
  *       "default" = "Drupal\path_file\Form\PathFileEntityForm",
  *       "add" = "Drupal\path_file\Form\PathFileEntityForm",
  *       "edit" = "Drupal\path_file\Form\PathFileEntityForm",
- *       "delete" = "Drupal\path_file\Form\PathFileEntityDeleteForm",
+ *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *     },
  *     "access" = "Drupal\path_file\PathFileEntityAccessControlHandler",
  *     "route_provider" = {
