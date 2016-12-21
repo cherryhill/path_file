@@ -19,22 +19,31 @@ class PathFileEntityAccessControlHandler extends EntityAccessControlHandler {
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     // @var \Drupal\path_file\Entity\PathFileEntityInterface $entity
+
+    // Default to Unknown operation, no opinion.
+    $access_result = AccessResult::neutral();
+
     switch ($operation) {
       case 'view':
         if (!$entity->isPublished()) {
-          return AccessResult::allowedIfHasPermission($account, 'view unpublished path file entity entities');
+          $access_result =  AccessResult::allowedIfHasPermission($account, 'view unpublished path file entity entities');
+        }else{
+          $access_result = AccessResult::allowedIfHasPermission($account, 'view published path file entity entities');
         }
-        return AccessResult::allowedIfHasPermission($account, 'view published path file entity entities');
+        break;
 
       case 'update':
-        return AccessResult::allowedIfHasPermission($account, 'edit path file entity entities');
-
+        $access_result = AccessResult::allowedIfHasPermission($account, 'edit path file entity entities');
+        break;
       case 'delete':
-        return AccessResult::allowedIfHasPermission($account, 'delete path file entity entities');
+        $access_result =  AccessResult::allowedIfHasPermission($account, 'delete path file entity entities');
+        break;
     }
+    // Add Cache contexts.
+    $access_result->cachePerPermissions();
+    $access_result->addCacheableDependency($entity);
 
-    // Unknown operation, no opinion.
-    return AccessResult::neutral();
+    return $access_result;
   }
 
   /**
