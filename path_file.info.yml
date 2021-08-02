@@ -3,7 +3,7 @@ description: Creates a new content type which can will render a file at the give
 package: File
 
 type: module
-core: 8.x
+core_version_requirement: ^8.8 || ^9
 
 configure: entity.path_file_entity.collection
 
