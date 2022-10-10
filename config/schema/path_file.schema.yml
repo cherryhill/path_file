@@ -1,0 +1,7 @@
+path_file.settings:
+  type: config_entity
+  label: 'Path file entity settings'
+  mapping:
+    allowed_extensions:
+      type: string
+      label: 'Allowed File Extensions'
